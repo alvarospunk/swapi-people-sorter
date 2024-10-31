@@ -1,4 +1,4 @@
-class StarWarsView:
+class SwapiPeopleSorterView:
     @staticmethod
     def format_response(data):
         if isinstance(data, list):
