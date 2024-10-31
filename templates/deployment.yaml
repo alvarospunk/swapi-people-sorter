@@ -6,6 +6,8 @@ metadata:
     app: {{ .Chart.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
