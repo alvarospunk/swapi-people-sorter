@@ -1,13 +1,12 @@
 import requests
 
-
-class SwapiPeopleSorterModel:
+class StarwarsModel:
     API_URL = "https://swapi.dev/api/people"
 
     @staticmethod
     def fetch_people_data():
         try:
-            response = requests.get(SwapiPeopleSorterModel.API_URL)
+            response = requests.get(StarWarsModel.API_URL)
             response.raise_for_status()
             data = response.json().get("results", [])
             sorted_data = sorted(data, key=lambda x: x.get("name", "").lower())
