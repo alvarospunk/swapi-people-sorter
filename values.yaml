@@ -1,0 +1,21 @@
+replicaCount: 2
+
+image:
+  repository: swapi-people-sorter
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 5000
+  nodePort: 30001
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  host: swapi-people-sorter.local
+  path: /
+
+resources: {}
