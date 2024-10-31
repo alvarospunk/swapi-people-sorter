@@ -1,6 +1,6 @@
 import requests
 
-class StarwarsModel:
+class StarWarsModel:
     API_URL = "https://swapi.dev/api/people"
 
     @staticmethod
