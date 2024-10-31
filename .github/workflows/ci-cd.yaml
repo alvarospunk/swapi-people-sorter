@@ -17,7 +17,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build Docker Image
-        run: docker build -t europe-southwest1-docker.pkg.dev/custom-manifest-435411-u7/swapi-people-sorter/starwars-microservice:latest ./app
+        run: docker build -t europe-southwest1-docker.pkg.dev/custom-manifest-435411-u7/swapi-people-sorter/swapi-people-sorter:latest ./app
 
       - name: Set up Google Cloud authentication
         uses: google-github-actions/auth@v1
@@ -35,7 +35,7 @@ jobs:
 
       - name: Push Docker Image to GCP Registry
         run: |
-          docker push europe-southwest1-docker.pkg.dev/custom-manifest-435411-u7/swapi-people-sorter/starwars-microservice:latest
+          docker push europe-southwest1-docker.pkg.dev/custom-manifest-435411-u7/swapi-people-sorter/swapi-people-sorter:latest
 
       - name: Get GKE Credentials
         run: |
@@ -47,4 +47,4 @@ jobs:
           version: 'latest'
 
       - name: Deploy to GKE with Helm
-        run: helm install swapi-people-sorter ./charts
+        run: helm install swapi-people-sorter .
