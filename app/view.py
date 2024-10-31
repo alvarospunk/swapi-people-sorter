@@ -1,4 +1,4 @@
-class StarsWarsView:
+class StarWarsView:
     @staticmethod
     def format_response(data):
         if isinstance(data, list):
