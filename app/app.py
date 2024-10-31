@@ -6,7 +6,7 @@ from view import StarWarsView
 app = Flask(__name__)
 
 
-@app.route('/starwars/people', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_people():
     data = StarWarsModel.fetch_people_data()
     response, status = StarWarsView.format_response(data)
