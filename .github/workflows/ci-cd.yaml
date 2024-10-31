@@ -1,37 +1,46 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline with GKE and Helm
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8 pytest
-
-      - name: Run Linter
-        run: flake8 app/
-
-      - name: Run Tests
-        run: pytest
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
 
       - name: Build Docker Image
+        run: docker build -t europe-southwest1-docker.pkg.dev/custom-manifest-435411-u7/swapi-people-sorter/starwars-microservice:latest ./app
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: custom-manifest-435411-u7
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Configure Docker for GCP
+        run: gcloud auth configure-docker europe-southwest1-docker.pkg.dev
+
+      - name: Push Docker Image to GCP Registry
         run: |
-          docker build -t starwars-microservice:latest ./app
+          docker push europe-southwest1-docker.pkg.dev/custom-manifest-435411-u7/swapi-people-sorter/starwars-microservice:latest
+
+      - name: Get GKE Credentials
+        run: |
+          gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project custom-manifest-435411-u7
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      - name: Deploy to GKE with Helm
+        run: helm install swapi-people-sorter ./charts
