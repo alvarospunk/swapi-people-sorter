@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
-from model import StarWarsModel
-from view import StarWarsView
+from .model import StarWarsModel
+from .view import StarWarsView
 
 
 app = Flask(__name__)
