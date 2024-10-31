@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: swapi-people-sorter
+  repository: europe-southwest1-docker.pkg.dev/custom-manifest-435411-u7/swapi-people-sorter/swapi-people-sorter
   tag: latest
   pullPolicy: IfNotPresent
 
