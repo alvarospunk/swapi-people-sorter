@@ -37,14 +37,14 @@ jobs:
         run: |
           docker push europe-southwest1-docker.pkg.dev/custom-manifest-435411-u7/swapi-people-sorter/swapi-people-sorter:latest
 
+      - name: Install gke-gcloud-auth-plugin
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
+
       - name: Get GKE Credentials
         run: |
           gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project custom-manifest-435411-u7
-
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'latest'
 
       - name: Deploy to GKE with Helm
         run: helm install swapi-people-sorter .
