@@ -46,4 +46,4 @@ jobs:
           gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project custom-manifest-435411-u7
 
       - name: Deploy to GKE with Helm
-        run: helm install swapi-people-sorter .
+        run: helm upgrade --install swapi-people-sorter .
