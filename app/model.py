@@ -1,5 +1,6 @@
 import requests
 
+
 class SwapiPeopleSorterModel:
     API_URL = "https://swapi.dev/api/people"
 
